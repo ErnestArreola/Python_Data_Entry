@@ -2,3 +2,9 @@
 
 
 conda install -c anaconda tk
+
+
+pip install conda
+
+
+pip install pandas usaddress tkinter
