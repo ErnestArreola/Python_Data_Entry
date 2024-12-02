@@ -86,6 +86,23 @@ def format_address(parsed_address):
         # If an error occurs, print or log the exception and return a default error message
         print(f"Error formatting address: {e}")
         return "Invalid address format"
+    
+def parse_and_format_address(address):
+    """
+    Parse the input address string and format it into a readable address.
+    """
+    try:
+        # Parse the address using usaddress
+        parsed_address, address_type = usaddress.tag(address)
+
+        # Get the formatted address
+        formatted_address = format_address(parsed_address)
+        return formatted_address
+
+    except Exception as e:
+        # Catch unexpected errors during parsing
+        print(f"Error parsing address: {e}")
+        return "Error parsing address"
 
 
 # Function to process the Excel file and parse the addresses
