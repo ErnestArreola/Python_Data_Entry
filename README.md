@@ -8,3 +8,5 @@ pip install conda
 
 
 pip install pandas usaddress tkinter
+
+pip install usaddress pandas openpyxl
