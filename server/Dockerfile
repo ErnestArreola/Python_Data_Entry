@@ -2,13 +2,13 @@
 FROM python:3.8-slim
 
 # Set the working directory
-# WORKDIR /server
+WORKDIR /app
 
 # Copy the requirements file into the container
-COPY requirements.txt .
+COPY ./requirement.txt requirement.txt.
 
 # Install the required Python packages
-RUN pip install -r requirements.txt
+RUN pip install -r requirement.txt
 
 # Copy the rest of the application code into the container
 COPY . .
