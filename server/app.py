@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-from fileinput import filename
 import pandas as pd
 from flask import *
 import os
@@ -28,4 +27,4 @@ def access():
  
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=False, host="0.0.0.0", port=8080)
