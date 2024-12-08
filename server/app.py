@@ -3,9 +3,7 @@ import pandas as pd
 from flask import *
 import os
 
-
 app = Flask(__name__)
-
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -13,7 +11,7 @@ def home():
       "Message": "app up and running successfully"
   })
 
-@app.route("/access",methods=["POST"])
+@app.route("/access", methods=["POST"])
 def access():
   data = request.get_json()
   name = data.get("name", "dipto")
