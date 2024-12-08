@@ -5,7 +5,7 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # Copy the requirements file into the container
-COPY ./requirement.txt requirement.txt.
+COPY ./requirement.txt requirement.txt
 
 # Install the required Python packages
 RUN pip install -r requirement.txt
