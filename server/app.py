@@ -8,7 +8,7 @@ import code
 import io
 
 app = Flask(__name__)
-cors = CORS(api, resources={r"/*": {"origins": "http://localhost:5173" }})
+cors = CORS(api, resources={r"/*": {"origins": "http://47.157.200.11:5173" }})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/', methods=['GET'])
