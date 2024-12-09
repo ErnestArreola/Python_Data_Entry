@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, send_file
 import pandas as pd
+from werkzeug.utils import secure_filename
 from flask import *
 import os
 import code
@@ -7,7 +8,7 @@ import io
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def home():
   return jsonify({
       "Message": "app up and running successfully"

@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function FileUpload() {
   const [file, setFile] = useState(null);
   const [responseFile, setResponseFile] = useState(null);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Axios GET request to the Flask backend
+    axios.get('https://python-data-entry.onrender.com:8080', {headers: {"Access-Control-Allow-Origin": "*"}}) 
+      .then(response => {
+        // Extracting the 'message' field from the JSON response
+        setMessage(response.data.message);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the message:", error);
+      });
+  }, []); // Empty dependency array means this will run only once (on component mount)
+
+
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -20,7 +35,7 @@ function FileUpload() {
 
     try {
       // Sending the file to the Flask server
-      const response = await axios.post('http://localhost:8080/upload', formData, {
+      const response = await axios.post('https://python-data-entry.onrender.com:8080/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -40,11 +55,16 @@ function FileUpload() {
   };
 
   return (
+    <>
     <div>
       <h1>Upload Excel File</h1>
       <input type="file" onChange={handleFileChange} accept=".xlsx,.xls" />
       <button onClick={handleUpload}>Upload and Download Processed File</button>
     </div>
+    <div>
+      <h1>{message}</h1>
+    </div>
+    </>
   );
 }
 
