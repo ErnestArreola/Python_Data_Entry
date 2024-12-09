@@ -16,28 +16,34 @@ def home():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    # Check if an Excel file was uploaded
+    # Check if the post request has the file part
     if 'file' not in request.files:
-        return {"error": "No file part in the request"}, 400
-    
+        return 'No file part', 400
     file = request.files['file']
-    
-    # Check if the file is actually provided
-    if file.filename == '':
-        return {"error": "No file selected for uploading"}, 400
 
-    # Validate the file type if necessary
+    if file.filename == '':
+        return 'No selected file', 400
+    
     if not file.filename.endswith(('.xls', '.xlsx')):
         return {"error": "Invalid file type, only Excel files are accepted"}, 400
 
-    result = code.main(file)
+    # If the file is allowed, save it
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
 
-    # Return the generated Excel file
-    return send_file(output, 
-                     mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                     as_attachment=True,
-                     download_name='result.xlsx')
+        # Process the file (e.g., read and modify the Excel file)
+        df = pd.read_excel(file_path)
 
+        # Save the modified file back
+        processed_file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'processed_file.xlsx')
+        df.to_excel(processed_file_path, index=False)
+
+        # Send the processed file back to the client
+        return send_file(processed_file_path, as_attachment=True, download_name='processed_file.xlsx')
+
+    return 'Invalid file format', 400
  
 if __name__ == '__main__':
-    app.run(debug=False, host="0.0.0.0", port=8080)
+    app.run(debug=True, host="0.0.0.0", port=8080)
