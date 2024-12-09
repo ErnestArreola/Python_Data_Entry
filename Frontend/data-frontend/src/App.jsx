@@ -8,7 +8,7 @@ function FileUpload() {
 
   useEffect(() => {
     // Axios GET request to the Flask backend
-    axios.get('https://python-data-entry.onrender.com:8080', {headers: {"Access-Control-Allow-Origin": "*"}}) 
+    axios.get('https://python-data-entry.onrender.com', {headers: {"Access-Control-Allow-Origin": "*"}}) 
       .then(response => {
         // Extracting the 'message' field from the JSON response
         setMessage(response.data.message);

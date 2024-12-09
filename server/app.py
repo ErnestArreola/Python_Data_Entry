@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS, cross_origin
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import *
@@ -7,6 +8,8 @@ import code
 import io
 
 app = Flask(__name__)
+cors = CORS(api, resources={r"/*": {"origins": "http://localhost:5173" }})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/', methods=['GET'])
 def home():
