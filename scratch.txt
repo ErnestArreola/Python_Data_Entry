@@ -1,0 +1,41 @@
+Sub SplitNames()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim i As Long
+    Dim fullName As String
+    Dim nameParts() As String
+    Dim firstName As String
+    Dim lastName As String
+    
+    Set ws = ThisWorkbook.Sheets(1) ' Change to your sheet name if needed
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row ' Assumes names are in Column A
+    
+    For i = 1 To lastRow
+        fullName = ws.Cells(i, 1).Value
+        
+        ' Check if the name contains a comma
+        If InStr(fullName, ",") > 0 Then
+            ' Skip this row and move to the next
+            ws.Cells(i, 2).Value = "Skipped" ' Optional: indicate skipped rows
+            ws.Cells(i, 3).Value = ""
+            GoTo NextRow
+        End If
+        
+        nameParts = Split(fullName, " ")
+        
+        If UBound(nameParts) = 1 Then
+            ' Two parts: first and last
+            firstName = nameParts(0)
+            lastName = nameParts(1)
+        Else
+            ' More than two parts: keep first names together
+            firstName = Join(Application.WorksheetFunction.Index(nameParts, 0, 1), " ")
+            lastName = nameParts(UBound(nameParts))
+        End If
+        
+        ws.Cells(i, 2).Value = firstName ' Column B for first name(s)
+        ws.Cells(i, 3).Value = lastName ' Column C for last name
+        
+NextRow:
+    Next i
+End Sub
