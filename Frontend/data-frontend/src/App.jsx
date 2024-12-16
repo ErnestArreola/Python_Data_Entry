@@ -6,12 +6,15 @@ function FileUpload() {
   const [responseFile, setResponseFile] = useState(null);
   const [message, setMessage] = useState('');
 
+  //https://python-data-entry.onrender.com/upload
+
   useEffect(() => {
     // Axios GET request to the Flask backend
     axios.get('https://python-data-entry.onrender.com', {headers: {"Access-Control-Allow-Origin": "*"}}) 
       .then(response => {
         // Extracting the 'message' field from the JSON response
         setMessage(response.data.message);
+        console.log(response);
       })
       .catch(error => {
         console.error("There was an error fetching the message:", error);
@@ -35,9 +38,9 @@ function FileUpload() {
 
     try {
       // Sending the file to the Flask server
-      const response = await axios.post('https://python-data-entry.onrender.com:8080/upload', formData, {
+      const response = await axios.post('http://localhost:5000/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         },
         responseType: 'blob' // Ensure that the response is a binary file (Excel file)
       });

@@ -92,7 +92,7 @@ def parse_and_format_address(address):
 def process_excel_file(file_path, column_name):
     try:
         # Read the Excel file into a pandas DataFrame
-        df = pd.read_excel(file_path)
+        df = pd.read_excel(file_path, engine='openpyxl')
 
         # Check if the specified column exists
         if column_name not in df.columns:
