@@ -38,7 +38,7 @@ function FileUpload() {
 
     try {
       // Sending the file to the Flask server
-      const response = await axios.post('http://localhost:5000/upload', formData, {
+      const response = await axios.post('https://python-data-entry.onrender.com/upload', formData, {
         headers: {
           'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         },
